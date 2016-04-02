@@ -1,0 +1,2 @@
+# breakout-minimal
+Minimal Solution
