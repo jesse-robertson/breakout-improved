@@ -10,6 +10,7 @@
         <script src="_site/phaser/canvas-to-blob.js" type="text/javascript"></script>
         <script src="_site/phaser/filesaver.js" type="text/javascript"></script>
         <script src="_site/phaser/embed.js" type="text/javascript"></script>
+        <script src="_site/js/pseudo-multiplayer.js" type="text/javascript"></script>
         <style>
             body {
                 margin: 0px;
@@ -39,6 +40,8 @@ function preload() {
 
 }
 
+var walls;
+var ballManager;
 var ball;
 var paddle;
 var bricks;
@@ -54,6 +57,47 @@ var introText;
 
 var s;
 
+
+var createGameWalls = function(game) {
+    
+    walls = game.add.group();
+    walls.enableBody = true;
+    walls.physicsBodyType = Phaser.Physics.ARCADE;
+    
+    var createGameWall = function(x,y,w,h) {
+        // Define bounding box for invisible wall
+        var wall = walls.create(x, y);
+        wall.height = h;
+        wall.width = w;
+        
+        // Perfecly elastic collisions
+        wall.body.bounce.set(1);
+        wall.body.immovable = true;
+        
+        return wall;
+    };
+    
+    var createHorizontalGameWall = function(y) {
+        return createGameWall(0,y,game.world.width,1);
+    };
+    
+    var createVerticalGameWall = function(x) {
+        return createGameWall(x,0,1,game.world.height);
+    };
+    
+    // Top Wall
+    var worldTop = 0;
+    createHorizontalGameWall(worldTop);
+    
+    // Left Wall
+    var worldLeft = 0;
+    createVerticalGameWall(worldLeft);
+    
+    // Right Wall
+    var worldRight = game.world.width;
+    createVerticalGameWall(worldRight);
+};
+
 function create() {
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -62,6 +106,9 @@ function create() {
     game.physics.arcade.checkCollision.down = false;
 
     s = game.add.tileSprite(0, 0, 800, 600, 'starfield');
+
+
+    createGameWalls(game);
 
     bricks = game.add.group();
     bricks.enableBody = true;
@@ -94,12 +141,15 @@ function create() {
 
     game.physics.enable(ball, Phaser.Physics.ARCADE);
 
-    ball.body.collideWorldBounds = true;
+    //
+    ball.body.collideWorldBounds = false;
     ball.body.bounce.set(1);
 
     ball.animations.add('spin', [ 'ball_1.png', 'ball_2.png', 'ball_3.png', 'ball_4.png', 'ball_5.png' ], 50, true, false);
 
     ball.events.onOutOfBounds.add(ballLost, this);
+    
+    ball.alpha = 0.25;
 
     scoreText = game.add.text(32, 550, 'score: 0', { font: "20px Arial", fill: "#ffffff", align: "left" });
     livesText = game.add.text(680, 550, 'lives: 3', { font: "20px Arial", fill: "#ffffff", align: "left" });
@@ -107,13 +157,17 @@ function create() {
     introText.anchor.setTo(0.5, 0.5);
 
     game.input.onDown.add(releaseBall, this);
-
+    
+    ballManager = new PseudoMultiplayer.BallManager(game, ball)
+        .addCollision(bricks, ballHitBrick)
+        .addCollision(paddle, ballHitPaddle)
+        .addCollision(walls);
 }
 
 function update () {
 
     //  Fun, but a little sea-sick inducing :) Uncomment if you like!
-    // s.tilePosition.x += (game.input.speed.x / 2);
+    //s.tilePosition.x += (game.input.speed.x / 2);
 
     paddle.x = game.input.x;
 
@@ -132,8 +186,7 @@ function update () {
     }
     else
     {
-        game.physics.arcade.collide(ball, paddle, ballHitPaddle, null, this);
-        game.physics.arcade.collide(ball, bricks, ballHitBrick, null, this);
+        ballManager.checkCollisions();
     }
 
 }
@@ -231,10 +284,9 @@ function ballHitPaddle (_ball, _paddle) {
         //  Add a little random X to stop it bouncing straight up!
         _ball.body.velocity.x = 2 + Math.random() * 8;
     }
-
 }
-        
         </script>
-
+        
+        <script src="_site/js/ai.js" type="text/javascript"></script>
     </body>
 </html>
