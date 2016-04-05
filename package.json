@@ -1,5 +1,5 @@
 {
-  "name": "workspace",
+  "name": "breakout-minimal",
   "version": "1.0.0",
   "description": "Minimal Solution",
   "main": "index.js",
