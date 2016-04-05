@@ -106,8 +106,9 @@ var BreakoutAi = BreakoutAi || function(game, bricks, paddle, ball) {
     /**
      * Prevents game from pausing when focus leaves the game.  This is helpful 
      * when testing multiple users by activating the AI in multiple browser
-     * windows.  NOTE: Some browsers will still pause the game on minimize or
-     * on tab change.
+     * windows.  
+     * 
+     * NOTE: Some browsers will still pause the game on minimize or tab change.
      */ 
     var preventGamePauseOnBlur = function() {
         game.stage.disableVisibilityChange = true;  
