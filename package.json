@@ -11,10 +11,14 @@
     "url": "git+https://github.com/jesse-robertson/breakout-minimal.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Jesse Robertson <jesse.robertson@ou.edu>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/jesse-robertson/breakout-minimal/issues"
   },
-  "homepage": "https://github.com/jesse-robertson/breakout-minimal#readme"
+  "homepage": "https://github.com/jesse-robertson/breakout-minimal#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "socket.io": "^1.4.5"
+  }
 }
