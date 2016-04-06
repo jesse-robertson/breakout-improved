@@ -51,11 +51,13 @@ a number of changes I would make if I were to maintain this project long-term:
    update() method.
 - I really want to replace the brick generation double loop with a utility
   function such as: 
+
     ```javascript
     gridForEach(4, 15, i => j => {
         // Define brick here
     });
     ```
+    
 - The current BallManager has a hard dependency on socket.io, I would prefer to 
   have it depend on a more generic pub/sub interface.
 - The main game instantiaton, preload(), create(), and update() should each be
