@@ -23,10 +23,13 @@ in index.js.
 1. Ensure that the $PORT and $IP environment variables are correct. These are
    set by default if you use cloud9.
 2. Install dependencies:
+
     ```sh
     $ npm install
     ```
+    
 3. Start the server:
+
     ```sh
     $ node index.js
     ```
