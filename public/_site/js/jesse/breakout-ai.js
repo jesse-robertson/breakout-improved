@@ -178,8 +178,8 @@ var BreakoutAi = BreakoutAi || function(game, bricks, paddle, ball) {
             getPaddlePosition = getPositioningSystem(),
             mouse = hijackMouseInput();
         
-        // By default, Phaser pauses the game on a blur event
-        // This needs to be disabled
+        // By default, Phaser pauses the game on a blur event. This needs to be 
+        // disabled to allow for multiple concurrent games (for testing).
         preventGamePauseOnBlur();
         
         // When the game asks for the user mouse x input...
