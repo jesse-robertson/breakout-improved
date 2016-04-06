@@ -44,11 +44,11 @@ a number of changes I would make if I were to maintain this project long-term:
 - Instead of singletons for ball, paddle, wall, and brick, I would prefer to
   define each of these in seperate files as classes.
   - This could clean up the game's create() method by making each class
-   responsible for its own configuration
+    responsible for its own configuration.
   - This would improve code re-use between the player ball and the 'ghost' balls 
-   of other players.
+    of other players.
   - Each class could have an .update() method, greatly simplifying the global
-   update() method.
+    update() method.
 - I really want to replace the brick generation double loop with a utility
   function such as: 
 
@@ -57,7 +57,7 @@ a number of changes I would make if I were to maintain this project long-term:
         // Define brick here
     });
     ```
-    
+
 - The current BallManager has a hard dependency on socket.io, I would prefer to 
   have it depend on a more generic pub/sub interface.
 - The main game instantiaton, preload(), create(), and update() should each be
