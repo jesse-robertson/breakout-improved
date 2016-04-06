@@ -1,7 +1,7 @@
 /**
  * Breakout Artificial Intelligence
  * 
- * Simulates a (skilled) human breakout player to facilitate multiplayer testing.
+ * Simulates a (skilled) human breakout player to facilitate multiplayer testing
  * 
  * Press any key during game to toggle Ai
  * 
@@ -32,6 +32,7 @@ var BreakoutAi = BreakoutAi || function(game, bricks, paddle, ball) {
      * @returns {function} 
      */ 
     var getTargetingSystem = function() {
+        
         // Target Brick
         var target;
         
@@ -41,7 +42,7 @@ var BreakoutAi = BreakoutAi || function(game, bricks, paddle, ball) {
          * latter requires the computationally expensive Math.sqrt().
          * 
          * @param {Phaser.Sprite} brick
-         * returns {number} Squared distance from brick to ball
+         * @returns {number} Squared distance from brick to ball
          */
         var getBallBrickDistanceSquared = function(brick) {
             if (!brick) return 0;
@@ -57,7 +58,7 @@ var BreakoutAi = BreakoutAi || function(game, bricks, paddle, ball) {
          * process.
          * 
          * @param {Phaser.Sprite} brick
-         * returns {object}
+         * @returns {object}
          */ 
         var brickToChallenger = function(brick) {
             return {

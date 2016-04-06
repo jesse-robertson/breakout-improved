@@ -98,7 +98,7 @@ var PseudoMultiplayer = PseudoMultiplayer || (function(io) {
      * @param {string} id Unique ghost ball identifier
      * @param {object} position New position ghost ball 
      * @param {object} velocity New velocity ghost ball 
-     * @this {BallManager}
+     * @this  {BallManager}
      */
     BallManager.prototype.updateGhost = function(id, position, velocity) {
         var ghost = this.getGhost(id);
@@ -147,8 +147,8 @@ var PseudoMultiplayer = PseudoMultiplayer || (function(io) {
     /**
      * Register an object/callback pair for collisons with player ball
      * 
-     * @param {object} entity Object or group of objects for which to check
-     *                        collisions with the player ball.
+     * @param {object} entity Object or group of objects for which to check 
+     *                 collisions with the player ball.
      * @param {function} callback Function to evoke when a collision occurs
      * @this {BallManager}
      * @returns {BallManager} 
