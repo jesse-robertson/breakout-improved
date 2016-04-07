@@ -1,22 +1,9 @@
-# Breakout Example with Pseudo-Multiplayer
+# IN PROGRESS!
+
+# Improved Breakout Example with Pseudo-Multiplayer 
 
 ## Intro
-My immediate instinct for this project was to completely refactor it, but I was
-worried that doing so would make it difficult for you to see what I changed for 
-my solution. See *Future Considerations* for more specifics. I will probably 
-fork this project and do it differently, but for now this is my solution with
-minimal changes to the original example.
-
-## Breakout AI Player
-To facilitate multiplayer testing, I've created an AI system that simulates a 
-skilled human player.  Feel free to use this for testing my work.  Press any key 
-during the breakout game to let the AI take over.
-
-## Where To Look
-The original example code is still public/index.html and only contains the 
-necessary changes to the create() and update() methods.  The remainder of my 
-client work is located in public/_site/js/jesse/ and my server code is located 
-in index.js.
+This is my improved submission, which diverges greatly from the original example.  This is currently in progress.  The orignal solution can be found here: [https://github.com/jesse-robertson/breakout-minimal](https://github.com/jesse-robertson/breakout-minimal)
 
 ## How To Test
 
@@ -35,7 +22,7 @@ in index.js.
 
 Let me know if I can assist with any questions or issues with my code.
 
-## Future Considerations
+## Checklist
 I am pleased with my overall solution for a project of this size, but there are a number of changes I would make if I were to maintain this project long-term:
 - Leverage ES6 capabilities, such as arrow functions, modules and classes.
 - Instead of singletons for ball, paddle, wall, and brick, I would prefer to define each of these in seperate files as classes.
