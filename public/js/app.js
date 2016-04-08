@@ -1,18 +1,22 @@
 // Declare Global vars for Cloud 9 IDE
 /* global Phaser PseudoMultiplayer createGameWalls */
 
-
-var IDE_HOOK = false;
-var VERSION = '2.4.6';
-
-        
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', {
+    preload: preload,
+    create: create,
+    update: update
+});
 
 function preload() {
-
-    game.load.atlas('breakout', 'img/breakout-spritemap.png', 'img/breakout-spritemap.json');
-    game.load.image('starfield', 'img/starfield-background.jpg');
-
+    game.load.atlas(
+        'breakout',
+        'img/breakout-spritemap.png',
+        'img/breakout-spritemap.json'
+    );
+    game.load.image(
+        'starfield',
+        'img/starfield-background.jpg'
+    );
 }
 
 //var walls;
@@ -41,18 +45,16 @@ function create() {
 
     s = game.add.tileSprite(0, 0, 800, 600, 'starfield');
 
-    
+
     bricks = game.add.group();
     bricks.enableBody = true;
     bricks.physicsBodyType = Phaser.Physics.ARCADE;
 
     var brick;
 
-    for (var y = 0; y < 4; y++)
-    {
-        for (var x = 0; x < 15; x++)
-        {
-            brick = bricks.create(120 + (x * 36), 100 + (y * 52), 'breakout', 'brick_' + (y+1) + '_1.png');
+    for (var y = 0; y < 4; y++) {
+        for (var x = 0; x < 15; x++) {
+            brick = bricks.create(120 + (x * 36), 100 + (y * 52), 'breakout', 'brick_' + (y + 1) + '_1.png');
             brick.body.bounce.set(1);
             brick.body.immovable = true;
         }
@@ -77,17 +79,29 @@ function create() {
     ball.body.collideWorldBounds = false;
     ball.body.bounce.set(1);
 
-    ball.animations.add('spin', [ 'ball_1.png', 'ball_2.png', 'ball_3.png', 'ball_4.png', 'ball_5.png' ], 50, true, false);
+    ball.animations.add('spin', ['ball_1.png', 'ball_2.png', 'ball_3.png', 'ball_4.png', 'ball_5.png'], 50, true, false);
 
     ball.events.onOutOfBounds.add(ballLost, this);
-    
-    scoreText = game.add.text(32, 550, 'score: 0', { font: "20px Arial", fill: "#ffffff", align: "left" });
-    livesText = game.add.text(680, 550, 'lives: 3', { font: "20px Arial", fill: "#ffffff", align: "left" });
-    introText = game.add.text(game.world.centerX, 400, '- click to start -', { font: "40px Arial", fill: "#ffffff", align: "center" });
+
+    scoreText = game.add.text(32, 550, 'score: 0', {
+        font: "20px Arial",
+        fill: "#ffffff",
+        align: "left"
+    });
+    livesText = game.add.text(680, 550, 'lives: 3', {
+        font: "20px Arial",
+        fill: "#ffffff",
+        align: "left"
+    });
+    introText = game.add.text(game.world.centerX, 400, '- click to start -', {
+        font: "40px Arial",
+        fill: "#ffffff",
+        align: "center"
+    });
     introText.anchor.setTo(0.5, 0.5);
 
     game.input.onDown.add(releaseBall, this);
-    
+
     // Create game walls
     var walls = createGameWalls(game);
 
@@ -98,38 +112,33 @@ function create() {
         .addCollision(walls);
 }
 
-function update () {
+function update() {
 
     //  Fun, but a little sea-sick inducing :) Uncomment if you like!
     //s.tilePosition.x += (game.input.speed.x / 2);
 
     paddle.x = game.input.x;
 
-    if (paddle.x < 24)
-    {
+    if (paddle.x < 24) {
         paddle.x = 24;
     }
-    else if (paddle.x > game.width - 24)
-    {
+    else if (paddle.x > game.width - 24) {
         paddle.x = game.width - 24;
     }
 
-    if (ballOnPaddle)
-    {
+    if (ballOnPaddle) {
         ball.body.x = paddle.x;
     }
-    else
-    {
+    else {
         // Have ball manager check player ball collisions
         ballManager.checkCollisions();
     }
 
 }
 
-function releaseBall () {
+function releaseBall() {
 
-    if (ballOnPaddle)
-    {
+    if (ballOnPaddle) {
         ballOnPaddle = false;
         ball.body.velocity.y = -300;
         ball.body.velocity.x = -75;
@@ -139,36 +148,34 @@ function releaseBall () {
 
 }
 
-function ballLost () {
+function ballLost() {
 
     lives--;
     livesText.text = 'lives: ' + lives;
 
-    if (lives === 0)
-    {
+    if (lives === 0) {
         gameOver();
     }
-    else
-    {
+    else {
         ballOnPaddle = true;
 
         ball.reset(paddle.body.x + 16, paddle.y - 16);
-        
+
         ball.animations.stop();
     }
 
 }
 
-function gameOver () {
+function gameOver() {
 
     ball.body.velocity.setTo(0, 0);
-    
+
     introText.text = 'Game Over!';
     introText.visible = true;
 
 }
 
-function ballHitBrick (_ball, _brick) {
+function ballHitBrick(_ball, _brick) {
 
     _brick.kill();
 
@@ -177,8 +184,7 @@ function ballHitBrick (_ball, _brick) {
     scoreText.text = 'score: ' + score;
 
     //  Are they any bricks left?
-    if (bricks.countLiving() == 0)
-    {
+    if (bricks.countLiving() == 0) {
         //  New level starts
         score += 1000;
         scoreText.text = 'score: ' + score;
@@ -197,24 +203,21 @@ function ballHitBrick (_ball, _brick) {
 
 }
 
-function ballHitPaddle (_ball, _paddle) {
+function ballHitPaddle(_ball, _paddle) {
 
     var diff = 0;
 
-    if (_ball.x < _paddle.x)
-    {
+    if (_ball.x < _paddle.x) {
         //  Ball is on the left-hand side of the paddle
         diff = _paddle.x - _ball.x;
         _ball.body.velocity.x = (-10 * diff);
     }
-    else if (_ball.x > _paddle.x)
-    {
+    else if (_ball.x > _paddle.x) {
         //  Ball is on the right-hand side of the paddle
-        diff = _ball.x -_paddle.x;
+        diff = _ball.x - _paddle.x;
         _ball.body.velocity.x = (10 * diff);
     }
-    else
-    {
+    else {
         //  Ball is perfectly in the middle
         //  Add a little random X to stop it bouncing straight up!
         _ball.body.velocity.x = 2 + Math.random() * 8;
