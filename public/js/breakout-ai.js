@@ -11,7 +11,7 @@
  * @param {Phaser.Sprite} paddle
  * @param {Phaser.Sprite} ball
  */
-var BreakoutAi = BreakoutAi || function(game, bricks, paddle, ball) {
+export default function(game, bricks, paddle, ball) {
     
     /**
      * Ensures the given value is within a given radius of zero.
@@ -201,4 +201,4 @@ var BreakoutAi = BreakoutAi || function(game, bricks, paddle, ball) {
     
     // Initialize AI
     init();
-};
+}

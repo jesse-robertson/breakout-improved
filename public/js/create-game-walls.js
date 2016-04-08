@@ -71,3 +71,5 @@ var createGameWalls = createGameWalls || function(game) {
     
     return walls;
 };
+
+export default createGameWalls;

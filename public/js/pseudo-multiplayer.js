@@ -235,3 +235,6 @@ var PseudoMultiplayer = PseudoMultiplayer || (function(io) {
     // Expose the BallManager class
     return { BallManager:BallManager };
 })(io);
+
+
+export default PseudoMultiplayer;

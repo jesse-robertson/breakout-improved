@@ -1,12 +1,10 @@
-
-
-
-
-// Declare Global vars for Cloud 9 IDE
-/* global Phaser BreakoutAi PseudoMultiplayer createGameWalls */
+/* global Phaser */
+import createGameWalls   from './create-game-walls.js';
+import PseudoMultiplayer from './pseudo-multiplayer.js';
+import BreakoutAi        from './breakout-ai.js';
 
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', {
-    preload: preload,
+    preload: preload, 
     create: create,
     update: update
 });
