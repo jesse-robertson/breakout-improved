@@ -1,5 +1,9 @@
+
+
+
+
 // Declare Global vars for Cloud 9 IDE
-/* global Phaser PseudoMultiplayer createGameWalls */
+/* global Phaser BreakoutAi PseudoMultiplayer createGameWalls */
 
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', {
     preload: preload,
@@ -223,3 +227,12 @@ function ballHitPaddle(_ball, _paddle) {
         _ball.body.velocity.x = 2 + Math.random() * 8;
     }
 }
+
+
+// Invoke the AI when a key is pressed
+var aiEnabled = false;
+document.onkeyup = function() {
+    if (aiEnabled) return;
+    aiEnabled = true;
+    BreakoutAi(game, bricks, paddle, ball);
+};

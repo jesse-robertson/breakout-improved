@@ -202,11 +202,3 @@ var BreakoutAi = BreakoutAi || function(game, bricks, paddle, ball) {
     // Initialize AI
     init();
 };
-
-// Invoke the AI when a key is pressed
-var aiEnabled = false;
-document.onkeyup = function() {
-    if (aiEnabled) return;
-    aiEnabled = true;
-    BreakoutAi(game, bricks, paddle, ball);
-};
