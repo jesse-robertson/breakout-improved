@@ -1,3 +1,5 @@
+import io from 'socket.io-client';
+
 /**
  * Pseudo-Multiplayer Module
  * 
