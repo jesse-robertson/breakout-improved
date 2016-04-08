@@ -42,23 +42,20 @@ var PseudoMultiplayer = PseudoMultiplayer || (function(io) {
      */
     BallManager.prototype.initializeSocket = function() {
         
-        // Really wish I was using ES6...
-        var _this = this;
-        
         // Open socket.io connection; force websockets by default
         this.socket = io({
             transports: ['websocket'] 
         });
         
         // On incoming bounce event, update the indicated ghost ball
-        this.socket.on(BOUNCE_EVENT, function (data) {
-            _this.updateGhost(data.id, data.position, data.velocity);
-        });
+        this.socket.on(BOUNCE_EVENT, data => 
+            this.updateGhost(data.id, data.position, data.velocity)
+        );
         
         // On incoming loss event, destroy the indicated ghost ball
-        this.socket.on(LOSS_EVENT, function(data) {
-            _this.destroyGhost(data.id);
-        });
+        this.socket.on(LOSS_EVENT, data => 
+            this.destroyGhost(data.id)
+        );
     };
     
     /**

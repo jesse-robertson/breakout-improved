@@ -1,5 +1,3 @@
-//var path = require('path');
-
 module.exports = {
     entry: "./public/js/app.js",
     output: {
@@ -16,29 +14,4 @@ module.exports = {
             }
         }]
     }
-    
-    
-    // resolve: {
-    //     alias: {
-    //         "pixi": path.join(__dirname, "lib/pixi.js"),
-    //         "phaser": path.join(__dirname, "lib/phaser.js")
-    //     }
-    // },
-    // module: {
-    //     loaders: [{
-    //         test: /phaser\.js$/,
-    //         include: path.join(__dirname, 'lib'),
-    //         loader: 'imports?PIXI=pixi'
-    //     }]
-    // }
-    // module: {
-    //     loaders: [{
-    //         loader: 'script',
-    //         test: /(pixi|phaser).js/
-    //     }]   
-    // }
 };
-
-// {
-
-// }
