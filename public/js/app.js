@@ -3,6 +3,8 @@ import createGameWalls   from './create-game-walls.js';
 import PseudoMultiplayer from './pseudo-multiplayer.js';
 import BreakoutAi        from './breakout-ai.js';
 
+//import BreakoutGame from './model/breakout-game.js';
+
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', {
     preload: preload, 
     create: create,
