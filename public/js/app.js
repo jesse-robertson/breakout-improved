@@ -1,4 +1,4 @@
-/* global Phaser */
+import Phaser from './helper/phaser-helper.js';
 import createGameWalls   from './create-game-walls.js';
 import PseudoMultiplayer from './pseudo-multiplayer.js';
 import BreakoutAi        from './breakout-ai.js';
@@ -21,11 +21,17 @@ function preload() {
         'starfield',
         'img/starfield-background.jpg'
     );
+    game.load.atlas(
+        'kitty', 
+        'img/dancing-cat.png', 
+        'img/dancing-cat-spritemap.json'
+    );
 }
 
 //var walls;
 var ballManager;
 var ball;
+var kitty;
 var paddle;
 var bricks;
 
@@ -83,9 +89,17 @@ function create() {
     ball.body.collideWorldBounds = false;
     ball.body.bounce.set(1);
 
+    
+
+
     ball.animations.add('spin', ['ball_1.png', 'ball_2.png', 'ball_3.png', 'ball_4.png', 'ball_5.png'], 50, true, false);
 
     ball.events.onOutOfBounds.add(ballLost, this);
+
+
+    kitty = game.add.sprite(0,0,'kitty','cat1.png');
+    kitty.animations.add('dance', ['cat1.png','cat2.png','cat3.png','cat4.png','cat5.png','cat6.png','cat7.png','cat8.png'], 8, true, false);
+    
 
     scoreText = game.add.text(32, 550, 'score: 0', {
         font: "20px Arial",
@@ -118,6 +132,7 @@ function create() {
 
 function update() {
 
+    
     //  Fun, but a little sea-sick inducing :) Uncomment if you like!
     //s.tilePosition.x += (game.input.speed.x / 2);
 
@@ -147,6 +162,7 @@ function releaseBall() {
         ball.body.velocity.y = -300;
         ball.body.velocity.x = -75;
         ball.animations.play('spin');
+        kitty.animations.play('dance');
         introText.visible = false;
     }
 
@@ -166,6 +182,7 @@ function ballLost() {
         ball.reset(paddle.body.x + 16, paddle.y - 16);
 
         ball.animations.stop();
+        kitty.animations.stop();
     }
 
 }
@@ -200,6 +217,7 @@ function ballHitBrick(_ball, _brick) {
         ball.x = paddle.x + 16;
         ball.y = paddle.y - 16;
         ball.animations.stop();
+        kitty.animations.stop();
 
         //  And bring the bricks back from the dead :)
         bricks.callAll('revive');

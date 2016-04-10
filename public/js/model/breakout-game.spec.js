@@ -1,5 +1,5 @@
-/* global Phaser */
 import {expect} from 'chai';
+import Phaser from '../helper/phaser-helper';
 import BreakoutGame from './breakout-game';
 
 describe('BreakoutGame', () => {
