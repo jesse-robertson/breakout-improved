@@ -14,4 +14,7 @@ var root = global || window;
 root.PIXI = require('phaser/build/custom/pixi');
 
 // Load and expose Phaser
-export default require('phaser/build/custom/phaser-arcade-physics');
+root.Phaser = require('phaser/build/custom/phaser-arcade-physics');
+
+// Make Phaser loadable from module
+export default root.Phaser;

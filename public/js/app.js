@@ -5,7 +5,7 @@ import BreakoutAi        from './breakout-ai.js';
 
 //import BreakoutGame from './model/breakout-game.js';
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', {
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-root', {
     preload: preload, 
     create: create,
     update: update
