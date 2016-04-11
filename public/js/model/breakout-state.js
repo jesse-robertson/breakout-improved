@@ -1,6 +1,7 @@
-import Phaser from '../helper/phaser-helper';
+import Phaser            from '../helper/phaser-helper';
 import createGameWalls   from '../create-game-walls.js';
 import PseudoMultiplayer from '../pseudo-multiplayer.js';
+import BreakoutAi        from '../breakout-ai.js';
 
 export default class BreakoutState extends Phaser.State {
     
@@ -152,6 +153,14 @@ export default class BreakoutState extends Phaser.State {
                 }
             })
             .addCollision(walls);
+            
+        // Invoke the AI when a key is pressed
+        var aiEnabled = false;
+        this.game.input.keyboard.addCallbacks(null, null, null, () => {
+            if (aiEnabled) return;
+            aiEnabled = true;
+            BreakoutAi(this.game, this.bricks, this.paddle, this.ball);
+        });  
     }
     
     update() {
