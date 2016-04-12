@@ -16,5 +16,6 @@ export default () => ({
     onResume: {
         add: () => {}
     },
-    world:{}
+    world:{},
+    renderer:{}
 });
