@@ -2,9 +2,15 @@ import Phaser            from '../helper/phaser-helper';
 import createGameWalls   from '../create-game-walls.js';
 import PseudoMultiplayer from '../pseudo-multiplayer.js';
 import BreakoutAi        from '../breakout-ai.js';
+import BreakoutBall      from './breakout-ball';
 
 export default class BreakoutState extends Phaser.State {
-    
+
+    constructor(game) {
+        super(game);
+        this.game = game;
+    }
+  
     preload() {
         this.game.load.atlas(
             'breakout',
@@ -18,20 +24,18 @@ export default class BreakoutState extends Phaser.State {
     }
     
     create() {
-        this.ballOnPaddle = true;
-        this.lives = 3;
-        this.score = 0;
         
+        // Physics
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
-    
+        
+        // Background
         this.game.add.tileSprite(0, 0, 800, 600, 'starfield');
-    
+        
+        // Bricks
         this.bricks = this.game.add.group();
         this.bricks.enableBody = true;
         this.bricks.physicsBodyType = Phaser.Physics.ARCADE;
-    
         var brick;
-    
         for (var y = 0; y < 4; y++) {
             for (var x = 0; x < 15; x++) {
                 brick = this.bricks.create(120 + (x * 36), 100 + (y * 52), 'breakout', 'brick_' + (y + 1) + '_1.png');
@@ -39,32 +43,30 @@ export default class BreakoutState extends Phaser.State {
                 brick.body.immovable = true;
             }
         }
-    
-        this.paddle = this.game.add.sprite(this.game.world.centerX, 500, 'breakout', 'paddle_big.png');
+       
+        // Walls
+        this.walls = createGameWalls(this.game);
+        
+        // Paddle
+        const paddleStartX = this.game.world.centerX;
+        const paddleStartY = 500;
+        this.paddle = this.game.add.sprite(paddleStartX, paddleStartY, 'breakout', 'paddle_big.png');
         this.paddle.anchor.setTo(0.5, 0.5);
-    
         this.game.physics.enable(this.paddle, Phaser.Physics.ARCADE);
-    
         this.paddle.body.collideWorldBounds = true;
         this.paddle.body.bounce.set(1);
         this.paddle.body.immovable = true;
-    
-        this.ball = this.game.add.sprite(this.game.world.centerX, this.paddle.y - 16, 'breakout', 'ball_1.png');
-        this.ball.anchor.set(0.5);
-        this.ball.checkWorldBounds = true;
-    
-        this.game.physics.enable(this.ball, Phaser.Physics.ARCADE);
-    
-        // Prevent default world bound collisions
-        this.ball.body.collideWorldBounds = false;
-        this.ball.body.bounce.set(1);
-    
-        this.ball.animations.add('spin', ['ball_1.png', 'ball_2.png', 'ball_3.png', 'ball_4.png', 'ball_5.png'], 50, true, false);
-    
+        
+        // BreakoutBall
+        const ballStartX = this.game.world.centerX;
+        const ballStartY = this.paddle.y - 16;
+        this.ball = new BreakoutBall(this.game, ballStartX, ballStartY);
+        
+        // PlayerBall
+        this.ballOnPaddle = true;
         this.ball.events.onOutOfBounds.add( () => {
             this.lives--;
             this.livesText.text = 'lives: ' + this.lives;
-        
             if (this.lives === 0) {
                 this.ball.body.velocity.setTo(0, 0);
                 this.introText.text = 'Game Over!';
@@ -75,25 +77,7 @@ export default class BreakoutState extends Phaser.State {
                 this.ball.animations.stop();
             }
         });
-    
-        this.scoreText = this.game.add.text(32, 550, 'score: 0', {
-            font: "20px Arial",
-            fill: "#ffffff",
-            align: "left"
-        });
-        this.livesText = this.game.add.text(680, 550, 'lives: 3', {
-            font: "20px Arial",
-            fill: "#ffffff",
-            align: "left"
-        });
-        this.introText = this.game.add.text(this.game.world.centerX, 400, '- click to start -', {
-            font: "40px Arial",
-            fill: "#ffffff",
-            align: "center"
-        });
-        this.introText.anchor.setTo(0.5, 0.5);
-    
-        this.game.input.onDown.add( () => {
+        const releaseBall = () => {
             if (this.ballOnPaddle) {
                 this.ballOnPaddle = false;
                 this.ball.body.velocity.y = -300;
@@ -101,12 +85,7 @@ export default class BreakoutState extends Phaser.State {
                 this.ball.animations.play('spin');
                 this.introText.visible = false;
             }
-        });
-    
-        // Create game walls
-        var walls = createGameWalls(this.game);
-    
-        // Create ball manager and define ball collisions
+        };
         this.ballManager = new PseudoMultiplayer.BallManager(this.game, this.ball)
             .addCollision(this.bricks, (ball, brick) => {
                 brick.kill();
@@ -152,15 +131,43 @@ export default class BreakoutState extends Phaser.State {
                     this.ball.body.velocity.x = 2 + Math.random() * 8;
                 }
             })
-            .addCollision(walls);
+            .addCollision(this.walls);
             
-        // Invoke the AI when a key is pressed
-        var aiEnabled = false;
-        this.game.input.keyboard.addCallbacks(null, null, null, () => {
-            if (aiEnabled) return;
-            aiEnabled = true;
+        // Score
+        this.score = 0;
+        this.scoreText = this.game.add.text(32, 550, 'score: 0', {
+            font: "20px Arial",
+            fill: "#ffffff",
+            align: "left"
+        });
+        
+        // Lives
+        this.lives = 3;
+        this.livesText = this.game.add.text(680, 550, 'lives: 3', {
+            font: "20px Arial",
+            fill: "#ffffff",
+            align: "left"
+        });
+        
+        // IntroText
+        this.introText = this.game.add.text(this.game.world.centerX, 400, '- click to start -', {
+            font: "40px Arial",
+            fill: "#ffffff",
+            align: "center"
+        });
+        this.introText.anchor.setTo(0.5, 0.5);
+    
+        // AI
+        this.aiEnabled = false;
+        const activateAi = () => {
+            if (this.aiEnabled) return;
+            this.aiEnabled = true;
             BreakoutAi(this.game, this.bricks, this.paddle, this.ball);
-        });  
+        };
+    
+        // Input
+        this.game.input.onDown.add(releaseBall);
+        this.game.input.keyboard.addCallbacks(null, null, null, activateAi);  
     }
     
     update() {
