@@ -2,7 +2,7 @@ import Phaser            from '../helper/phaser-helper';
 import createGameWalls   from '../create-game-walls.js';
 import PseudoMultiplayer from '../pseudo-multiplayer.js';
 import BreakoutAi        from '../breakout-ai.js';
-import BreakoutBall      from './breakout-ball';
+import BreakoutBall      from '../game-objects/breakout-ball';
 
 export default class BreakoutState extends Phaser.State {
 

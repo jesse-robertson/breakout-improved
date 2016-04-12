@@ -1,2 +1,2 @@
-import BreakoutGame from './model/breakout-game.js';
+import BreakoutGame from './core/breakout-game.js';
 new BreakoutGame();

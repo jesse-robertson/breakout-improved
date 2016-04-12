@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import Phaser from '../helper/phaser-helper';
 import BreakoutState from './breakout-state';
-import BreakoutBall from './breakout-ball';
+import BreakoutBall from '../game-objects/breakout-ball';
 import StubPhaserGame from '../../../test-utils/phaser-stubs/stub-phaser-game';
 
 describe('BreakoutState', () => {
