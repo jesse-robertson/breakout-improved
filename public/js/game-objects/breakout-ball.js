@@ -3,6 +3,7 @@ import Phaser from '../helper/phaser-helper';
 export default class BreakoutBall extends Phaser.Sprite {
     constructor(game, x, y) {
         super(game, x, y, 'breakout', 'ball_1.png');
+        
         if (this.game) {
             this.game.add.existing(this);   
             this.game.physics.enable(this, Phaser.Physics.ARCADE);
@@ -11,14 +12,27 @@ export default class BreakoutBall extends Phaser.Sprite {
                 this.body.bounce.set(1);
             }
         }
-        
         this.anchor.set(0.5);
         this.checkWorldBounds = true;
-        this.configureAnimations();
+        this.addAnimations();
     }
     
-    configureAnimations() {
-        const animations = {
+    addAnimations() {
+        const animations = this.defineAnimations();
+        Object.getOwnPropertyNames(animations).forEach( name => {
+            const { frames, fps, isLooped } = animations[name];
+            this.animations.add(name, frames, fps, isLooped);
+        });
+    }
+    
+    defineAnimations() {
+        return {
+            spin: this.defineSpinAnimation() 
+        };
+    }
+    
+    defineSpinAnimation() {
+        return {
             spin : {
                 isLooped: true,
                 fps: 50,
@@ -30,11 +44,6 @@ export default class BreakoutBall extends Phaser.Sprite {
                     'ball_5.png'
                 ]
             }
-        };
-        
-        Object.getOwnPropertyNames(animations).forEach( name => {
-            const { frames, fps, isLooped } = animations[name];
-            this.animations.add(name, frames, fps, isLooped);
-        });
+        };   
     }
 }
