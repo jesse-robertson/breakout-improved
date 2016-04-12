@@ -3,13 +3,17 @@ import config from '../config.js';
 
 export default class BreakoutBall extends Phaser.Sprite {
     
+    static get Image() { 
+        return config.assets.mainAtlas;
+    }
+    
     static Preload(game) {
-        const {key, textureUrl, atlasUrl} = config.assets.mainAtlas;
+        const {key, textureUrl, atlasUrl} = BreakoutBall.Image;
         game.load.atlas(key, textureUrl, atlasUrl);
     }
     
     constructor(game, x, y) {
-        super(game, x, y, 'breakout', 'ball_1.png');
+        super(game, x, y, BreakoutBall.Image.key, 'ball_1.png');
         
         if (this.game) {
             this.game.add.existing(this);   
