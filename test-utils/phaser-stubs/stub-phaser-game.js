@@ -1,63 +1,18 @@
+import StubPhaserGameObjectFactory from './stub-phaser-game-object-factory';
+import StubPhaserPhysics           from './stub-phaser-physics';
+import StubPhaserCache             from './stub-phaser-cache';
+import StubPhaserInput             from './stub-phaser-input';
+
 export default () => ({
-    cache: {
-        getImage: () => ({
-            key: null, 
-            base: {
-                hasLoaded: true
-            }, 
-            frameData: {
-                getFrameIndexes: () => [],
-                getFrameByName: () => false,
-                getFrame: () => false
-            }
-        })
-    },
-    add: {
-        text: () => ({
-            anchor: { 
-                setTo: () => {} 
-            }
-        }),
-        existing: () => {},
-        tileSprite: () => {},
-        sprite: () => ({
-            anchor: { 
-                setTo: () => {} 
-            }
-        }),
-        group: () => ({
-            create: () => ({
-                body: {
-                    bounce: {
-                        set: () => {}
-                    }
-                }
-            })
-        })
-    },
-    physics: {
-        enable : entity => {
-            entity.body = {
-                bounce: {
-                    set: () => {}
-                }
-            };
-        },
-        startSystem : () => {}
-    },
+    add     : StubPhaserGameObjectFactory(),
+    physics : StubPhaserPhysics(),
+    cache   : StubPhaserCache(),
+    input   : StubPhaserInput(),
     onPause: {
         add: () => {}
     },
     onResume: {
         add: () => {}
     },
-    world:{},
-    input: {
-        onDown: {
-            add: () => {}
-        },
-        keyboard: {
-            addCallbacks: () => {}
-        }
-    } 
+    world:{}
 });
