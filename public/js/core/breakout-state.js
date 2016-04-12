@@ -12,11 +12,8 @@ export default class BreakoutState extends Phaser.State {
     }
   
     preload() {
-        this.game.load.atlas(
-            'breakout',
-            'img/breakout-spritemap.png',
-            'img/breakout-spritemap.json'
-        );
+        BreakoutBall.Preload(this.game);
+        
         this.game.load.image(
             'starfield',
             'img/starfield-background.jpg'

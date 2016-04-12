@@ -6,6 +6,14 @@ import StubPhaserGame from '../../../test-utils/phaser-stubs/stub-phaser-game';
 describe('BreakoutBall', () => {
     let game;
     
+    const replaceOwnMethodsWith = (object, replacement) => {
+        Object.getOwnPropertyNames(object).forEach( name => {
+            if ('function' === typeof object[name]) {
+                object[name] = replacement;
+            }
+        });
+    };
+    
     beforeEach( () => {
         game = StubPhaserGame();
     });
@@ -43,5 +51,16 @@ describe('BreakoutBall', () => {
         
         expect(entityEnabled).to.equal(ball);
         expect(physicsTypeEnabled).to.equal(Phaser.Physics.ARCADE);
+    });
+    
+    it('should have a static .Preload method to load its assets', () => {
+        let aLoaderMethodWasCalled = false;
+        replaceOwnMethodsWith(game.load, () => {
+            aLoaderMethodWasCalled = true;
+        });
+        expect(aLoaderMethodWasCalled).to.equal(false);
+        expect(BreakoutBall).to.have.property('Preload');
+        BreakoutBall.Preload(game);
+        expect(aLoaderMethodWasCalled).to.equal(true);
     });
 });

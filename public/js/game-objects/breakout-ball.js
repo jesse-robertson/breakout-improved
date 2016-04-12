@@ -1,6 +1,15 @@
 import Phaser from '../helper/phaser-helper';
 
 export default class BreakoutBall extends Phaser.Sprite {
+    
+    static Preload(game) {
+        game.load.atlas(
+            'breakout',
+            'img/breakout-spritemap.png',
+            'img/breakout-spritemap.json'
+        );
+    }
+    
     constructor(game, x, y) {
         super(game, x, y, 'breakout', 'ball_1.png');
         
