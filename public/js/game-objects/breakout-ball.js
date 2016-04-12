@@ -1,13 +1,11 @@
 import Phaser from '../helper/phaser-helper';
+import config from '../config.js';
 
 export default class BreakoutBall extends Phaser.Sprite {
     
     static Preload(game) {
-        game.load.atlas(
-            'breakout',
-            'img/breakout-spritemap.png',
-            'img/breakout-spritemap.json'
-        );
+        const {key, textureUrl, atlasUrl} = config.assets.mainAtlas;
+        game.load.atlas(key, textureUrl, atlasUrl);
     }
     
     constructor(game, x, y) {
@@ -27,32 +25,31 @@ export default class BreakoutBall extends Phaser.Sprite {
     }
     
     addAnimations() {
-        const animations = this.defineAnimations();
-        Object.getOwnPropertyNames(animations).forEach( name => {
-            const { frames, fps, isLooped } = animations[name];
-            this.animations.add(name, frames, fps, isLooped);
+        this.defineAnimations().forEach( animation => {
+            const {name, frames, frameRate, loop, useNumericIndex} = animation;
+            this.animations.add(name, frames, frameRate, loop, useNumericIndex);
         });
     }
     
     defineAnimations() {
-        return {
-            spin: this.defineSpinAnimation() 
-        };
+        return [
+            this.defineSpinAnimation() 
+        ];
     }
     
     defineSpinAnimation() {
         return {
-            spin : {
-                isLooped: true,
-                fps: 50,
-                frames: [
-                    'ball_1.png', 
-                    'ball_2.png', 
-                    'ball_3.png', 
-                    'ball_4.png', 
-                    'ball_5.png'
-                ]
-            }
+            name: 'spin',
+            loop: true,
+            frameRate: 50,
+            frames: [
+                'ball_1.png', 
+                'ball_2.png', 
+                'ball_3.png', 
+                'ball_4.png', 
+                'ball_5.png'
+            ],
+            useNumericIndex: false
         };   
     }
 }
