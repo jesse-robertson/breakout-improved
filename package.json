@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --progress --colors",
-    "test": "mocha --compilers js:babel-core/register --require ./util/test-helper.js ./**/*.spec.js"
+    "build-watch": "npm run build -- --watch",
+    "test": "mocha --compilers js:babel-core/register --require ./test-utils/test-helper.js ./**/*.spec.js"
   },
   "repository": {
     "type": "git",

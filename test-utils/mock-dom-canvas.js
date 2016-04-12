@@ -22,8 +22,8 @@ global.navigator = {userAgent: 'Custom'}; // could be anything
 // fake the xml http request object because Phaser.Loader uses it
 global.XMLHttpRequest = function() {};
 
-// Object.keys(window).forEach( key => {
-//   if (!(key in global)) {
-//     global[key] = window[key];
-//   }
-// });
+Object.keys(window).forEach( key => {
+  if (!(key in global)) {
+    global[key] = window[key];
+  }
+});
