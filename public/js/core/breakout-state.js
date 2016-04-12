@@ -1,8 +1,9 @@
-import Phaser            from '../helper/phaser-helper';
-import createGameWalls   from '../create-game-walls.js';
-import PseudoMultiplayer from '../pseudo-multiplayer.js';
-import BreakoutAi        from '../breakout-ai.js';
-import BreakoutBall      from '../game-objects/breakout-ball';
+import Phaser             from '../helper/phaser-helper';
+import createGameWalls    from '../create-game-walls.js';
+import PseudoMultiplayer  from '../pseudo-multiplayer.js';
+import BreakoutAi         from '../breakout-ai.js';
+import BreakoutBall       from '../game-objects/breakout-ball';
+import BreakoutBackground from '../hud/breakout-background';
 
 export default class BreakoutState extends Phaser.State {
 
@@ -12,21 +13,16 @@ export default class BreakoutState extends Phaser.State {
     }
   
     preload() {
+        BreakoutBackground.Preload(this.game);
         BreakoutBall.Preload(this.game);
-        
-        this.game.load.image(
-            'starfield',
-            'img/starfield-background.jpg'
-        );
     }
     
     create() {
+        // Background
+        new BreakoutBackground(this.game);
         
         // Physics
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
-        
-        // Background
-        this.game.add.tileSprite(0, 0, 800, 600, 'starfield');
         
         // Bricks
         this.bricks = this.game.add.group();
