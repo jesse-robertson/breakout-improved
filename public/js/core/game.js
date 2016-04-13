@@ -3,8 +3,6 @@ import State  from './state.js';
 
 export default class Game extends Phaser.Game {
     
-    static Preload() {}
-    
     static Create(state) {
         state.game.physics.startSystem(Phaser.Physics.ARCADE);
     }

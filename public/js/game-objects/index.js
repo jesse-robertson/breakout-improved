@@ -1,6 +1,11 @@
-import Ball   from './ball';
-import Walls  from './walls';
-import Bricks from './bricks';
-import Paddle from './paddle';
+import Ball       from './ball';
+import Bricks     from './bricks';
+import Paddle     from './paddle';
+import GameWalls  from './game-walls';
 
-export default [Walls, Bricks, Paddle, Ball];
+export default [
+    GameWalls, 
+    Bricks, 
+    Paddle, 
+    Ball
+];

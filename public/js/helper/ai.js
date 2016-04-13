@@ -1,4 +1,4 @@
-import {clamp} from './utility-functions';
+import {clamp} from './math-helper';
 
 /**
  * Breakout Artificial Intelligence
@@ -13,8 +13,6 @@ import {clamp} from './utility-functions';
  
 export default class Ai {
  
-    static Preload(){}
-    
     static Create(state) {
         
         let {game, bricks, ball, paddle} = state;

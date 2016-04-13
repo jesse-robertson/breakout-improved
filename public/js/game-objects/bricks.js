@@ -1,6 +1,6 @@
-import Phaser from '../helper/phaser-helper';
-import Brick       from './brick';
-import {gridEach}  from '../helper/utility-functions';
+import SpriteGrid from './base/sprite-grid';
+import Brick      from './brick';
+import config     from '../config';
 
 export default class Bricks {
     
@@ -9,21 +9,24 @@ export default class Bricks {
     }
     
     static Create(state) {
-        const brickGroupX = 120;
-        const brickGroupY = 100; 
-        const brickRowCount = 4;
-        const brickColumnCount = 15;
-        const gridCellWidth = 36;
-        const gridCellHeight = 52;
-        state.bricks = state.game.add.group();
-        state.bricks.enableBody = true;
-        state.bricks.physicsBodyType = Phaser.Physics.ARCADE;
-        gridEach(brickRowCount, brickColumnCount, i => j => {
-            const brickX = brickGroupX + gridCellWidth  * i;
-            const brickY = brickGroupY + gridCellHeight * j;
-            let brick = state.bricks.create(brickX, brickY, 'breakout', 'brick_' + (j + 1) + '_1.png');
-            brick.body.bounce.set(1);
-            brick.body.immovable = true;
-        });
+        const {
+            x, 
+            y, 
+            rows, 
+            columns, 
+            cellWidth, 
+            cellHeight
+        } = config.elements.bricks;
+        
+        state.bricks = new SpriteGrid(
+            state.game, 
+            x, 
+            y, 
+            rows, 
+            columns, 
+            cellWidth, 
+            cellHeight,
+            Brick
+        );
     }
 }

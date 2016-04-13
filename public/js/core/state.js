@@ -1,8 +1,12 @@
-import Phaser     from '../helper/phaser-helper';
+import Phaser      from '../helper/phaser-helper';
 import Game        from './game';
 import Hud         from '../hud/';
 import GameObjects from '../game-objects/';
 import Ai          from '../helper/ai.js';
+
+const PRELOAD = 'Preload';
+const CREATE  = 'Create';
+const UPDATE  = 'Update';
 
 export default class BreakoutState extends Phaser.State {
 
@@ -13,20 +17,33 @@ export default class BreakoutState extends Phaser.State {
     }
   
     /**
-     * Delegates preloading responsibility to game the components themselves
+     * Delegates preload responsibility to game the components themselves
      */ 
-    preload() { 
-        this.components.forEach( component => {
-            component.Preload(this); 
-        }); 
-    }
+    preload() { this.all(PRELOAD); }
     
     /**
-     * Delegates creation responsibility to the game components themselves
+     * Delegates create responsibility to the game components themselves
      */ 
-    create() { 
+    create() { this.all(CREATE); }
+    
+    /**
+     * Delegates update responsibility to the game components themselves.
+     * 
+     * NOTE: No component .Update() methods exist yet.  When possible, the
+     * object instances themselves should determine update behavior
+     */ 
+    update() { this.all(UPDATE); }
+    
+    /**
+     * Invokes a given method on all components
+     * @param {string} methodName String name of component method
+     */
+    all(methodName) {
         this.components.forEach( component => {
-            component.Create(this); 
-        }); 
+            let method = component[methodName];
+            if(method) {
+                method(this); 
+            }
+        });
     }
 }

@@ -25,11 +25,24 @@ export function clamp(...args) {
 
 
 export function gridEach(n, m, curry) {
-    let i = n;
-    while (i--) {
-        let j = m;
-        while (j--) {
-            curry(j)(i);
+    let j = m;
+    while (j--) {
+        let callback = curry(j);
+        let i = n;
+        while (i--) {
+            callback(i);
         }
     }
+}
+
+export function gridMap(n, m, curry) {
+    let output = [];
+    gridEach(n, m, i => {
+        let callback = curry(i);
+        return j => {
+            let value = callback(j);
+            output.push(value);
+        };
+    });
+    return output;
 }

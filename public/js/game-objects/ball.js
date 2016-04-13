@@ -1,6 +1,6 @@
-import Phaser from '../helper/phaser-helper';
-import config from '../config.js';
-import {clamp}            from '../helper/utility-functions';
+import Phaser    from '../helper/phaser-helper';
+import config    from '../config.js';
+import {getSafeMouseX} from '../helper/input-helper';
 import PseudoMultiplayer  from '../pseudo-multiplayer.js';
 
 export default class Ball extends Phaser.Sprite {
@@ -16,14 +16,14 @@ export default class Ball extends Phaser.Sprite {
     
     static Create(state) {
         // BreakoutBall
-        const ballStartY = 484;
-        const ballStartX = state.game.world.centerX;
-        state.ball = new Ball(state.game, ballStartX, ballStartY);
+        const y = 484;
+        const x = state.game.world.centerX;
+        state.ball = new Ball(state.game, x, y);
         
         // PlayerBall
         const resetBall = () => {
             state.ballOnPaddle = true;
-            state.ball.reset(ballStartX, ballStartY);
+            state.ball.reset(x, y);
             state.ball.animations.stop();
         };
         
@@ -81,7 +81,7 @@ export default class Ball extends Phaser.Sprite {
             .addCollision(state.walls);
         state.ball.update = () => {
             if (state.ballOnPaddle) {
-                state.ball.body.x = clamp(state.game.input.x, 24, state.game.width-24);
+                state.ball.body.x = getSafeMouseX(state.game);
             }
             else {
                 // Have ball manager check player ball collisions
@@ -90,9 +90,6 @@ export default class Ball extends Phaser.Sprite {
         };
         
     }
-    
-    
-    
     
     constructor(game, x, y) {
         super(game, x, y, Ball.Image.key, 'ball_1.png');

@@ -1,9 +1,10 @@
 import {expect} from 'chai';
 import Phaser from '../helper/phaser-helper';
-import BreakoutBall from './ball';
+import Ball from './ball';
 import StubPhaserGame from '../../../test-utils/phaser-stubs/stub-phaser-game';
+import StubPhaserState from '../../../test-utils/phaser-stubs/stub-phaser-state';
 
-describe('BreakoutBall', () => {
+describe('Ball', () => {
     let game;
     
     const replaceOwnMethodsWith = (object, replacement) => {
@@ -19,7 +20,7 @@ describe('BreakoutBall', () => {
     });
     
     it('should be an instance of Phaser.Sprite', () => {
-        var ball = new BreakoutBall(game);
+        var ball = new Ball(game);
         expect(ball).to.be.an.instanceof(Phaser.Sprite);
     });
     
@@ -28,13 +29,13 @@ describe('BreakoutBall', () => {
         
         game.add.existing = entity => addExistingArgument = entity;
         
-        var ball = new BreakoutBall(game);
+        var ball = new Ball(game);
         
         expect(addExistingArgument).to.equal(ball);
     });
     
     it('should accept x and y coordinates', () => {
-        var ball = new BreakoutBall(game, 42, 53);
+        var ball = new Ball(game, 42, 53);
         expect(ball.x).to.equal(42);
         expect(ball.y).to.equal(53);
     });
@@ -47,7 +48,7 @@ describe('BreakoutBall', () => {
             physicsTypeEnabled = type;
             return StubPhaserGame().physics.enable(entity, type);
         };
-        var ball = new BreakoutBall(game);
+        var ball = new Ball(game);
         
         expect(entityEnabled).to.equal(ball);
         expect(physicsTypeEnabled).to.equal(Phaser.Physics.ARCADE);
@@ -55,12 +56,13 @@ describe('BreakoutBall', () => {
     
     it('should have a static .Preload method to load its assets', () => {
         let aLoaderMethodWasCalled = false;
-        replaceOwnMethodsWith(game.load, () => {
+        let state = StubPhaserState();
+        replaceOwnMethodsWith(state.game.load, () => {
             aLoaderMethodWasCalled = true;
         });
         expect(aLoaderMethodWasCalled).to.equal(false);
-        expect(BreakoutBall).to.have.property('Preload');
-        BreakoutBall.Preload(game);
+        expect(Ball).to.have.property('Preload');
+        Ball.Preload(state);
         expect(aLoaderMethodWasCalled).to.equal(true);
     });
 });

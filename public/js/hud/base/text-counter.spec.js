@@ -1,7 +1,7 @@
 import {expect} from 'chai';
-import Phaser from '../helper/phaser-helper';
+import Phaser from '../../helper/phaser-helper';
 import TextCounter from './text-counter';
-import StubPhaserGame from '../../../test-utils/phaser-stubs/stub-phaser-game';
+import StubPhaserGame from '../../../../test-utils/phaser-stubs/stub-phaser-game';
 
 describe('TextCounter', () => {
     let game, text;
