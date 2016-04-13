@@ -1,4 +1,4 @@
-import Phaser from '../helper/phaser-helper';
+import Phaser from '../../helper/phaser-helper';
 
 export default class TextCounter extends Phaser.Text {
     constructor(game, x = 0, y = 0, prefix = '', value = 0, style) {

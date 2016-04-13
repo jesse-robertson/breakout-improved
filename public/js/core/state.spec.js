@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import Phaser from '../helper/phaser-helper';
-import BreakoutState from './breakout-state';
+import BreakoutState from './state';
 import BreakoutBall from '../game-objects/breakout-ball';
 import StubPhaserGame from '../../../test-utils/phaser-stubs/stub-phaser-game';
 
@@ -14,11 +14,6 @@ describe('BreakoutState', () => {
     it('should have a preload() method', () => {
         var state = new BreakoutState();
         expect(state.preload).to.be.an.instanceof(Function);
-    });
-    
-    it('should have an update() method', () => {
-        var state = new BreakoutState();
-        expect(state.update).to.be.an.instanceof(Function);
     });
     
     describe('Creation', () => {

@@ -1,2 +1,2 @@
-import BreakoutGame from './core/breakout-game.js';
-new BreakoutGame();
+import Game from './core/game.js';
+new Game();
