@@ -1,8 +1,6 @@
 import {expect} from 'chai';
 import Phaser from '../helper/phaser-helper';
 import State from './state';
-import Ball from '../game-objects/ball';
-import StubPhaserGame from '../../../test-utils/phaser-stubs/stub-phaser-game';
 
 describe('State', () => {
     
@@ -16,17 +14,13 @@ describe('State', () => {
         expect(state.preload).to.be.an.instanceof(Function);
     });
     
-    describe('Creation', () => {
-        it('should have a create() method', () => {
-            var state = new State();
-            expect(state.create).to.be.an.instanceof(Function);
-        });
-        
-        it('should create a .ball property of type Ball', () => {
-            var game = StubPhaserGame();
-            var state = new State(game);
-            state.create();
-            expect(state.ball).to.be.an.instanceof(Ball);
-        });    
+    it('should have a create() method', () => {
+        var state = new State();
+        expect(state.create).to.be.an.instanceof(Function);
+    });
+    
+    it('should have an update() method', () => {
+        var state = new State();
+        expect(state.update).to.be.an.instanceof(Function);
     });
 });

@@ -46,3 +46,13 @@ export function gridMap(n, m, curry) {
     });
     return output;
 }
+
+export function gather(objects, key) {
+    return objects
+        .filter( x => !!x[key] )
+        .map( x => x[key] );
+}
+    
+export function invokeAll(functions, ...args) {
+    return functions.map( f => f(...args) );
+}
