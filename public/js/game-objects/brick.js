@@ -1,5 +1,10 @@
 import Phaser from '../helper/phaser-helper';
 import config from '../config.js';
+import {
+    BallHitBrick,
+    BrickKilled
+} from '../core/events';
+
 
 export default class Brick extends Phaser.Sprite {
     
@@ -23,5 +28,13 @@ export default class Brick extends Phaser.Sprite {
                 this.body.immovable = true;    
             }
         }
+        
+        BallHitBrick.subscribe( (ball, brick) => {
+            if (brick === this) {
+                this.kill();
+                BrickKilled.publish(this);
+            }
+        });
+        
     }
 }

@@ -1,6 +1,7 @@
 import SpriteGrid from './base/sprite-grid';
 import Brick      from './brick';
 import config     from '../config';
+import {NextLevel, BrickKilled} from '../core/events';
 
 export default class Bricks {
     
@@ -28,5 +29,12 @@ export default class Bricks {
             cellHeight,
             Brick
         );
+        
+        BrickKilled.subscribe( () => {
+            if (state.bricks.countLiving() == 0) {
+                state.bricks.callAll('revive');
+                NextLevel.publish();
+            }
+        });
     }
 }

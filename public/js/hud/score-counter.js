@@ -1,4 +1,5 @@
 import TextCounter from './base/text-counter';
+import {NextLevel, BrickKilled} from '../core/events';
 
 export default class ScoreCounter extends TextCounter{
     
@@ -12,5 +13,8 @@ export default class ScoreCounter extends TextCounter{
             fill: "#ffffff",
             align: "left"
         });
+        
+        NextLevel.subscribe( () => { this.increment(1000); });
+        BrickKilled.subscribe( () => { this.increment(10); });
     }
 }

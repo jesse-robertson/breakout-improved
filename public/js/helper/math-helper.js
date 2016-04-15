@@ -56,3 +56,34 @@ export function gather(objects, key) {
 export function invokeAll(functions, ...args) {
     return functions.map( f => f(...args) );
 }
+
+
+ /**
+ * Computes the squared distance (d^2) between the player ball and a
+ * given brick.  Uses squared distance instead of distance because the
+ * latter requires the computationally expensive Math.sqrt().
+ * 
+ * @param {Phaser.Sprite} brick
+ * @returns {number} Squared distance from brick to ball
+ */
+export function distanceSquared(a, b) {
+    if (!a) return null;
+    if (!a) return null;
+    const dx = a.x - b.x;
+    const dy = a.y - b.y;
+    return dx*dx + dy*dy;
+}
+    
+    
+    
+export function callOnce(callback) {
+    let wasCalled = false;
+    
+    return (...args) => {
+        if (wasCalled) return;
+        
+        wasCalled = true;
+        
+        return callback(...args);
+    };
+}

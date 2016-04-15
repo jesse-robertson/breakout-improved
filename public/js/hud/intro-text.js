@@ -1,4 +1,5 @@
 import Phaser from '../helper/phaser-helper';
+import {GameOver, BallReleased, NextLevel} from '../core/events';
 
 const WELCOME_TEXT    = '- click to start -';
 const NEXT_LEVEL_TEXT = '- Next Level -';
@@ -18,6 +19,16 @@ export default class IntroText extends Phaser.Text {
         });
         this.anchor.setTo(0.5, 0.5);
         if (game) game.add.existing(this);
+        
+        GameOver.subscribe( () => {
+            this.showGameOver();
+        });
+        BallReleased.subscribe( () => {
+            this.clear();
+        });
+        NextLevel.subscribe( () => {
+            this.showNextLevel();
+        });
     }
     
     showGameOver(){
@@ -30,7 +41,7 @@ export default class IntroText extends Phaser.Text {
         this.visible = true;
     }
     
-    hide() {
+    clear() {
         this.text = '';
         this.visible = false;
     }

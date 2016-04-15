@@ -1,4 +1,5 @@
 import TextCounter from './base/text-counter';
+import {BallLost, GameOver, RestartBall} from '../core/events';
 
 export default class LivesCounter extends TextCounter{
     
@@ -11,6 +12,15 @@ export default class LivesCounter extends TextCounter{
             font: "20px Arial",
             fill: "#ffffff",
             align: "left"
+        });
+        
+        BallLost.subscribe( () => {
+            this.decrement();
+            if (this.value === 0) {
+                GameOver.publish(this.game);
+            } else {  
+                RestartBall.publish();
+            } 
         });
     }
 }
